@@ -4,7 +4,7 @@ import { Wallet } from "ethers";
 import password from "@inquirer/password";
 import type { SignerWithAddress } from "@nomicfoundation/hardhat-ethers/signers";
 import type { DeployedContractsOnChains } from "@kadena/hardhat-chainweb/lib/utils";
-import { generateDeployedContractsFile } from "./utils";
+// import { generateDeployedContractsFile } from "./utils";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -65,7 +65,7 @@ async function main() {
       console.log(`Contract successfully deployed to ${successfulDeployments.length} chains`);
 
       // Generate file for local deployments
-      await generateDeployedContractsFile(successfulDeployments);
+      // await generateDeployedContractsFile(successfulDeployments);
       process.exit(0);
     }
   }

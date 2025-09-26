@@ -99,29 +99,29 @@ function getContractDataFromDeployments() {
  * Generates the TypeScript contract definition file based on the json output of the contract deployment scripts
  * This script should be run last.
  */
-const generateTsAbis: DeployFunction = async function () {
-  const TARGET_DIR = "../www/contracts/";
-  const allContractsData = getContractDataFromDeployments();
+// const generateTsAbis: DeployFunction = async function () {
+//   const TARGET_DIR = "../www/contracts/";
+//   const allContractsData = getContractDataFromDeployments();
 
-  const fileContent = Object.entries(allContractsData).reduce((content, [chainId, chainConfig]) => {
-    return `${content}${parseInt(chainId).toFixed(0)}:${JSON.stringify(chainConfig, null, 2)},`;
-  }, "");
+//   const fileContent = Object.entries(allContractsData).reduce((content, [chainId, chainConfig]) => {
+//     return `${content}${parseInt(chainId).toFixed(0)}:${JSON.stringify(chainConfig, null, 2)},`;
+//   }, "");
 
-  if (!fs.existsSync(TARGET_DIR)) {
-    fs.mkdirSync(TARGET_DIR);
-  }
-  fs.writeFileSync(
-    `${TARGET_DIR}deployedContracts.ts`,
-    await prettier.format(
-      `${generatedContractComment} import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract"; \n\n
- const deployedContracts = {${fileContent}} as const; \n\n export default deployedContracts satisfies GenericContractsDeclaration`,
-      {
-        parser: "typescript",
-      },
-    ),
-  );
+//   if (!fs.existsSync(TARGET_DIR)) {
+//     fs.mkdirSync(TARGET_DIR);
+//   }
+//   fs.writeFileSync(
+//     `${TARGET_DIR}deployedContracts.ts`,
+//     await prettier.format(
+//       `${generatedContractComment} import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract"; \n\n
+//  const deployedContracts = {${fileContent}} as const; \n\n export default deployedContracts satisfies GenericContractsDeclaration`,
+//       {
+//         parser: "typescript",
+//       },
+//     ),
+//   );
 
-  console.log(`📝 Updated TypeScript contract definition file on ${TARGET_DIR}deployedContracts.ts`);
-};
+//   console.log(`📝 Updated TypeScript contract definition file on ${TARGET_DIR}deployedContracts.ts`);
+// };
 
-export default generateTsAbis;
+// export default generateTsAbis;

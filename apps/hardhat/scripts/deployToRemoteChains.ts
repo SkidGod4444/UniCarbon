@@ -1,5 +1,5 @@
 import { chainweb, ethers, run } from "hardhat";
-import { generateDeployedContractsFile } from "./utils";
+// import { generateDeployedContractsFile } from "./utils";
 
 async function main() {
   console.log("Remote deployment starting...");
@@ -38,7 +38,7 @@ async function main() {
     console.log(`Contract successfully deployed to ${successfulDeployments.length} chains`);
 
     // Generate the deployed contracts file
-    await generateDeployedContractsFile(successfulDeployments);
+    // await generateDeployedContractsFile(successfulDeployments);
 
     // Verify smart contracts on each chain
     const deploymentsByChain: Record<number, any> = {};
