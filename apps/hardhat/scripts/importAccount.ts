@@ -3,7 +3,7 @@ import { parse, stringify } from "envfile";
 import * as fs from "fs";
 import password from "@inquirer/password";
 
-const envFilePath = "../.env";
+const envFilePath = "./.env";
 
 const getValidatedPassword = async () => {
   while (true) {

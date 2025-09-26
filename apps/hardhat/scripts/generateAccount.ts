@@ -3,7 +3,7 @@ import { parse, stringify } from "envfile";
 import * as fs from "fs";
 import password from "@inquirer/password";
 
-const envFilePath = "../.env";
+const envFilePath = "./.env";
 
 const getValidatedPassword = async () => {
   while (true) {
@@ -45,7 +45,7 @@ async function main() {
 
   const existingEnvConfig = parse(fs.readFileSync(envFilePath).toString());
   if (existingEnvConfig.DEPLOYER_PRIVATE_KEY_ENCRYPTED) {
-    console.log("⚠️ You already have a deployer account. Check the .env file");
+    console.log("⚠️ You already have a deployer account. Check the packages/hardhat/.env file");
     return;
   }
 

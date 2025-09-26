@@ -2,7 +2,7 @@ import "@nomicfoundation/hardhat-toolbox";
 import "@kadena/hardhat-chainweb";
 import "@kadena/hardhat-kadena-create2";
 import "hardhat-deploy-ethers";
-import "./tasks/verify.chainweb";
+import "./tasks/verify-chainweb";
 import "dotenv/config";
 import { HardhatUserConfig } from "hardhat/config";
 
@@ -11,7 +11,7 @@ const accounts = deployerKey ? [deployerKey] : [];
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.28",
+    version: "0.8.29",
     settings: {
       optimizer: { enabled: true, runs: 1000 },
       evmVersion: "prague",

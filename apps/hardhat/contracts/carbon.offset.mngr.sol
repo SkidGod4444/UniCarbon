@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity ^0.8.28;
+pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "./carbon.credit";
-import "./offset.nft";
+import "./carbon.credit.sol";
+import "./offset.nft.sol";
 
 contract CarbonOffsetManager is Ownable {
     CarbonCredit public carbonCredit;
