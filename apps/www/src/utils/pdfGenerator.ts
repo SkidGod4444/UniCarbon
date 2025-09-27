@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 interface RetirementCertificate {
     retiredOn: string;
     tonnes: string ;
-    // beneficiary: string;
+    beneficiary: string;
     description: string;
     beneficiaryAddress: string;
     project: string;
@@ -71,7 +71,7 @@ export const generateRetirementCertificate = async (data: RetirementCertificate)
     doc.setFontSize(10);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 0);
-    doc.text(`Mahindra`, 22, 102); //data.beneficiary
+    doc.text(`${data.beneficiary}`, 22, 102); //data.beneficiary
     // doc.text(`${data.beneficiary}`, 22, 102);
 
     doc.setFontSize(9);
@@ -83,13 +83,6 @@ export const generateRetirementCertificate = async (data: RetirementCertificate)
     doc.setFont("helvetica", "normal");
     doc.setTextColor(128, 128, 128);
     doc.text(data.beneficiaryAddress, 110, 102); //data.beneficiaryAddress
-
-    doc.setFontSize(9);
-    doc.setFont("helvetica", "bold");
-    doc.setTextColor(0, 0, 0);
-    doc.textWithLink('Polygonscan', 110, 107, { url: `https://amoy.polygonscan.com/address/${data.beneficiaryAddress}` });
-    doc.setLineWidth(0.2);
-    doc.line(110, 108, 130, 108); // Horizontal line under the text
 
     // RETIREMENT TRANSACTION part
     doc.setFontSize(9);
@@ -119,7 +112,7 @@ export const generateRetirementCertificate = async (data: RetirementCertificate)
     doc.setFontSize(9);
     doc.setFont("helvetica", "bold");
     doc.setTextColor(0, 0, 0);
-    doc.textWithLink('Polygonscan', 22, 162, { url: `https://amoy.polygonscan.com/tx/${data.transactionHash}` });
+    doc.textWithLink('Kadena Chainweb', 22, 162, { url: `https://chain-20.evm-testnet-blockscout.chainweb.com/tx/${data.transactionHash}` });
     doc.setLineWidth(0.2);
     doc.line(22, 163, 42, 163); // Horizontal line under the text
 

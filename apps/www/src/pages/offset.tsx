@@ -207,7 +207,8 @@ export default function CreditPurchasePage() {
 
     setLoading(true);
     try {
-      toast.loading("Retiring credits...", {
+      toast.loading("Retiring credits in progress...", {
+        description: "Please wait while we retire your credits can take a while to complete",
         id: "retire-credits",
       });
 
@@ -269,6 +270,7 @@ export default function CreditPurchasePage() {
         generateRetirementCertificate({
           retiredOn: format(new Date(), "dd MMM yyyy"),
           tonnes: String(data.data?.credits),
+          beneficiary: data.data?.beneficiary_name,
           beneficiaryAddress: data.data?.beneficiary_address,
           project: selectedProject.name || "",
           transactionHash: data.data?.transaction_hash,
