@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -7,89 +6,84 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 import "./carbon.credit.sol";
 import "./offset.nft.sol";
 
+/// @title CarbonOffsetManager
+/// @notice Main contract to sell credits and issue offset NFTs
 contract CarbonOffsetManager is Ownable {
     CarbonCredit public carbonCredit;
     OffsetNFT public offsetNFT;
     address public centralWallet;
+    uint256 public pricePerCredit; // in wei per credit
 
-    event ProjectCompleted(uint256 amount, string projectName);
-    event OffsetAgainstProject(uint256 amount, address sourceCompany, address sinkCompany, string fromProject,  uint256 nftId);
-    event TokensClaimed(address user, uint256 amount);
-    event OffsetToProject(uint256 amount, address sourceCompany, uint256 nftId);
+    event CreditsPurchased(address indexed buyer, uint256 amount, uint256 paid);
+    event CreditsOffset(address indexed company, uint256 amount, uint256 nftId);
 
-    constructor(address _carbonCredit, address _offsetNFT, address _centralWallet, address initialOwner) Ownable(initialOwner) {
-        carbonCredit = CarbonCredit(payable(_carbonCredit));
-        offsetNFT = OffsetNFT(payable(_offsetNFT));
+    constructor(
+        address _carbonCredit,
+        address _offsetNFT,
+        address _centralWallet,
+        address initialOwner,
+        uint256 _pricePerCredit
+    ) Ownable(initialOwner) {
+        carbonCredit = CarbonCredit(_carbonCredit);
+        offsetNFT = OffsetNFT(_offsetNFT);
         centralWallet = _centralWallet;
+        pricePerCredit = _pricePerCredit;
     }
 
-    function projectComplete(uint256 amount, string memory projectName) public onlyOwner {
+    /// @notice Buy credits by paying ETH
+    function buyCredits(uint256 amount) external payable {
+        require(msg.value >= amount * pricePerCredit, "Not enough KAD sent");
+        require(carbonCredit.balanceOf(centralWallet) >= amount, "Central wallet has no credits");
+
+        // Transfer credits from central wallet to buyer
+        carbonCredit.transferFrom(centralWallet, msg.sender, amount);
+
+        emit CreditsPurchased(msg.sender, amount, msg.value);
+    }
+
+    /// @notice Company offsets credits, gets NFT certificate
+    function offset(uint256 amount, string memory projectName) external {
+        require(carbonCredit.balanceOf(msg.sender) >= amount, "Not enough credits to offset");
+
+        // Burn directly from company wallet
+        carbonCredit.burnFrom(msg.sender, amount);
+
+        // Generate metadata
+        string memory uri = generateMetadata(msg.sender, amount, projectName);
+
+        // Mint NFT certificate to company
+        uint256 nftId = offsetNFT.mintCertificate(msg.sender, uri);
+
+        emit CreditsOffset(msg.sender, amount, nftId);
+    }
+
+    /// @notice Generate simple JSON metadata for NFT
+    function generateMetadata(address company, uint256 amount, string memory projectName)
+        internal
+        view
+        returns (string memory)
+    {
+        return string(
+            abi.encodePacked(
+                '{"company":"', Strings.toHexString(uint160(company), 20),
+                '","amount":"', Strings.toString(amount),
+                '","project":"', projectName,
+                '","timestamp":"', Strings.toString(block.timestamp),
+                '"}'
+            )
+        );
+    }
+
+    /// @notice Admin can fund central wallet with credits
+    function projectComplete(uint256 amount) external onlyOwner {
         carbonCredit.mint(centralWallet, amount);
-        emit ProjectCompleted(amount, projectName);
     }
 
-    // fromcompany. , fromproject , tocompany  
-    // addd more fields for name of comapny
+    /// @notice Recieve ETH payments
+    receive() external payable {}
 
-    function offsetAgainstProject(uint256 amount, address sourceCompany, address sinkCompany, string memory fromProject) public onlyOwner {
-        require(carbonCredit.balanceOf(centralWallet) >= amount, "Insufficient tokens in central wallet");
-
-        carbonCredit.burn(centralWallet, amount);
-
-        string memory nftURI = generateNFTURI(amount, sourceCompany, sinkCompany, fromProject);
-        uint256 nftId = offsetNFT.safeMint(sinkCompany, nftURI);
-
-        emit OffsetAgainstProject(amount, sourceCompany, sinkCompany, fromProject, nftId);
-    }
-
-    // transfer from db user to on chain user wallet 
-
-    function claim(address user, uint256 amount) public onlyOwner {
-        require(carbonCredit.balanceOf(centralWallet) >= amount, "Insufficient tokens in central wallet");
-        carbonCredit.transferFrom(centralWallet, user, amount);
-        emit TokensClaimed(user, amount);
-    }
-
-
-    /// 
-
-    function offsetToProject(uint256 amount, address sinkCompany) public {
-        require(carbonCredit.balanceOf(sinkCompany) >= amount, "Insufficient tokens in source company wallet");
-
-        // Transfer tokens from the source company to this contract
-        carbonCredit.transferFrom(sinkCompany, address(this), amount);
-
-        // Burn the tokens
-        carbonCredit.burn(address(this), amount);
-
-        string memory nftURI = generateNFTURI(amount, sinkCompany, address(0), "");
-        uint256 nftId = offsetNFT.safeMint(sinkCompany, nftURI);
-
-        emit OffsetToProject(amount, sinkCompany, nftId);
-    }
-
-    function generateNFTURI(uint256 amount, address sourceCompany, address sinkCompany, string memory fromProject) internal pure returns (string memory) {
-        // In a real-world scenario, you would generate a proper JSON metadata here
-        // For simplicity, we're just concatenating the data
-        return string(abi.encodePacked(
-            "Amount:", Strings.toString(amount),
-            ",Source:", Strings.toHexString(uint160(sourceCompany), 20),
-            ",Sink:", Strings.toHexString(uint160(sinkCompany), 20),
-            ",From:", fromProject
-        ));
-    }
-
-    function setCentralWallet(address newCentralWallet) public onlyOwner {
-        centralWallet = newCentralWallet;
-    }
-
-    // Function to receive ETH when sent to this contract
-    receive() external payable {
-        // Contract can now receive and hold ETH
-    }
-
-    // Debug function
-    function debugProjectComplete() public onlyOwner view returns (bool, address)  {
-        return (msg.sender == owner(), owner());
+    /// @notice Withdraw ETH payments
+    function withdraw() external onlyOwner {
+        payable(owner()).transfer(address(this).balance);
     }
 }

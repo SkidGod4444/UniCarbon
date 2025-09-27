@@ -2,39 +2,26 @@
 pragma solidity ^0.8.29;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Pausable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract CarbonCredit is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
+/// @title CarbonCredit
+/// @notice ERC20 token representing carbon credits
+contract CarbonCredit is ERC20, Ownable {
     constructor(address initialOwner) ERC20("CarbonCredit", "CC") Ownable(initialOwner) {}
 
-    function pause() public onlyOwner {
-        _pause();
-    }
-
-    function unpause() public onlyOwner {
-        _unpause();
-    }
-
-    function mint(address to, uint256 amount) public onlyOwner {
+    /// @notice Mint new credits (only owner can do this, e.g. government/regulator)
+    function mint(address to, uint256 amount) external onlyOwner {
         _mint(to, amount);
     }
 
-    function burn(address from, uint256 amount) public onlyOwner {
-        _burn(from, amount);
+    /// @notice Burn credits from caller’s balance
+    function burn(uint256 amount) external {
+        _burn(msg.sender, amount);
     }
 
-    // Function to receive ETH when sent to this contract
-    receive() external payable {
-        // Contract can now receive and hold ETH
-    }
-
-    // The following functions are overrides required by Solidity.
-    function _update(address from, address to, uint256 value)
-        internal
-        override(ERC20, ERC20Pausable)
-    {
-        super._update(from, to, value);
+    /// @notice Burn credits from another account (requires allowance)
+    function burnFrom(address account, uint256 amount) external {
+        _spendAllowance(account, msg.sender, amount);
+        _burn(account, amount);
     }
 }

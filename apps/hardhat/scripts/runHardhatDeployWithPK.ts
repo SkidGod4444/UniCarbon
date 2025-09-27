@@ -42,14 +42,15 @@ async function main() {
       constructorArgs: [deployer.address],
     });
 
-    // Deploy CarbonOffsetManager with dependencies
+    // Deploy CarbonOffsetManager with dependencies and 5th argument ethers.parseUnits("1", 18)
     deployed = await chainweb.deployContractOnChains({
       name: "CarbonOffsetManager",
       constructorArgs: [
         carbonCreditDeployed.deployments[0].address, // _carbonCredit
-        offsetNFTDeployed.deployments[0].address, // _offsetNFT
-        deployer.address, // _centralWallet
-        deployer.address, // initialOwner
+        offsetNFTDeployed.deployments[0].address,   // _offsetNFT
+        deployer.address,                           // _centralWallet
+        deployer.address,                           // initialOwner
+        ethers.parseUnits("1", 18)                  // _pricePerCredit (example: 1 token = 1 ETH)
       ],
     });
     if (deployed.deployments.length === 0) {
@@ -63,9 +64,13 @@ async function main() {
 
     if (successfulDeployments.length > 0) {
       console.log(`Contract successfully deployed to ${successfulDeployments.length} chains`);
-
-      // Generate file for local deployments
-      // await generateDeployedContractsFile(successfulDeployments);
+      // Log addresses of all contracts
+      const carbonCreditAddress = carbonCreditDeployed.deployments[0].address;
+      const offsetNFTAddress = offsetNFTDeployed.deployments[0].address;
+      const carbonOffsetManagerAddress = deployed.deployments[0].address;
+      console.log("\n\n>> CarbonCredit address:", carbonCreditAddress);
+      console.log("\n\n>> OffsetNFT address:", offsetNFTAddress);
+      console.log("\n\n>> CarbonOffsetManager address:", carbonOffsetManagerAddress);
       process.exit(0);
     }
   }
