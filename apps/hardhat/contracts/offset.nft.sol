@@ -18,6 +18,11 @@ contract OffsetNFT is ERC721, ERC721URIStorage, Ownable {
         return newTokenId;
     }
 
+    // Function to receive ETH when sent to this contract
+    receive() external payable {
+        // Contract can now receive and hold ETH
+    }
+
     // The following functions are overrides required by Solidity.
     function tokenURI(uint256 tokenId) public view override(ERC721, ERC721URIStorage) returns (string memory) {
         return super.tokenURI(tokenId);
