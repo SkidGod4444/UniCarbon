@@ -38,7 +38,7 @@ async function main() {
 
     // Deploy OffsetNFT
     const offsetNFTDeployed = await chainweb.deployContractOnChains({
-      name: "OffsetNFT", 
+      name: "OffsetNFT",
       constructorArgs: [deployer.address],
     });
 
@@ -47,9 +47,9 @@ async function main() {
       name: "CarbonOffsetManager",
       constructorArgs: [
         carbonCreditDeployed.deployments[0].address, // _carbonCredit
-        offsetNFTDeployed.deployments[0].address,    // _offsetNFT
-        deployer.address,                            // _centralWallet
-        deployer.address                             // initialOwner
+        offsetNFTDeployed.deployments[0].address, // _offsetNFT
+        deployer.address, // _centralWallet
+        deployer.address, // initialOwner
       ],
     });
     if (deployed.deployments.length === 0) {
