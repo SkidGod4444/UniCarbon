@@ -16,7 +16,8 @@
     "next": "15.5.4",
     "razorpay": "^2.9.6",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "@unicarbon/db": "workspace*"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

@@ -12,8 +12,8 @@ model Companies {
   id              String          @id @default(uuid())
   name            String
   wallet          String          @unique
-  total_purchased Int
-  total_offset    Int
+  total_purchased Int?
+  total_offset    Int?
   created_at      DateTime
   CarbonCredits   CarbonCredits[]
   NftProofs       NftProofs[]

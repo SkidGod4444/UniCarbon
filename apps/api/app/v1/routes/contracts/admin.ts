@@ -1,3 +1,4 @@
+import { carbonManager } from "@/utilities/contracts";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -24,7 +25,7 @@ admin.post("/project-complete", async (c) => {
   }
 });
 
-router.post("/withdraw", async (c) => {
+admin.post("/withdraw", async (c) => {
   try {
     const tx = await carbonManager.withdraw();
     const receipt = await tx.wait();
@@ -35,4 +36,4 @@ router.post("/withdraw", async (c) => {
   }
 });
 
-export default router;
+export default admin;
