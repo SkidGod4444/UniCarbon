@@ -25,6 +25,11 @@ contract CarbonCredit is ERC20, ERC20Burnable, ERC20Pausable, Ownable {
         _burn(from, amount);
     }
 
+    // Function to receive ETH when sent to this contract
+    receive() external payable {
+        // Contract can now receive and hold ETH
+    }
+
     // The following functions are overrides required by Solidity.
     function _update(address from, address to, uint256 value)
         internal

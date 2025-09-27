@@ -18,8 +18,8 @@ contract CarbonOffsetManager is Ownable {
     event OffsetToProject(uint256 amount, address sourceCompany, uint256 nftId);
 
     constructor(address _carbonCredit, address _offsetNFT, address _centralWallet, address initialOwner) Ownable(initialOwner) {
-        carbonCredit = CarbonCredit(_carbonCredit);
-        offsetNFT = OffsetNFT(_offsetNFT);
+        carbonCredit = CarbonCredit(payable(_carbonCredit));
+        offsetNFT = OffsetNFT(payable(_offsetNFT));
         centralWallet = _centralWallet;
     }
 
@@ -81,6 +81,11 @@ contract CarbonOffsetManager is Ownable {
 
     function setCentralWallet(address newCentralWallet) public onlyOwner {
         centralWallet = newCentralWallet;
+    }
+
+    // Function to receive ETH when sent to this contract
+    receive() external payable {
+        // Contract can now receive and hold ETH
     }
 
     // Debug function
