@@ -10,16 +10,20 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@polar-sh/sdk": "^0.35.2",
+    "@supabase/supabase-js": "^2.58.0",
     "hono": "^4.9.9",
     "next": "15.5.4",
+    "razorpay": "^2.9.6",
     "react": "19.1.0",
     "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@biomejs/biome": "2.2.0",
+    "@types/bun": "^1.2.22",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@biomejs/biome": "2.2.0"
+    "typescript": "^5"
   }
 }

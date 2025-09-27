@@ -11,6 +11,7 @@
     "clean": "hardhat clean",
     "compile": "hardhat compile",
     "deploy": "hardhat run scripts/runHardhatDeployWithPK.ts",
+    "deploy:testnet": "bun run deploy --chainweb testnet",
     "flatten": "hardhat flatten",
     "fork": "TESTNET_FORKING_ENABLED=true hardhat node",
     "format": "prettier --write './**/*.(ts|sol)'",

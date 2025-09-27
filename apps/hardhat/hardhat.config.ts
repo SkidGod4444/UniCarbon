@@ -31,7 +31,7 @@ const config: HardhatUserConfig = {
     },
     testnet: {
       type: "external",
-      chains: 5,
+      chains: 1,
       accounts: accounts,
       chainIdOffset: 5920,
       chainwebChainIdOffset: 20,

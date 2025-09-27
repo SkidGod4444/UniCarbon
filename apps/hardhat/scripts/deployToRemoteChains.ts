@@ -19,11 +19,34 @@ async function main() {
   // This creates a bytes32 hash of the string. Change as needed to redeploy same contract code to different address.
   const salt = ethers.id("mySalt");
 
-  // Deploy the contract using standard Create2 factory functionality to ensure the same address across all chains
-  console.log("Deploying contract using Create2...");
+  // Deploy CarbonCredit first
+  console.log("Deploying CarbonCredit using Create2...");
+  const carbonCreditDeployed = await chainweb.create2.deployOnChainsUsingCreate2({
+    name: "CarbonCredit",
+    constructorArgs: [deployer.address],
+    create2Factory: factoryAddress,
+    salt: ethers.id("carbonCredit"),
+  });
+
+  // Deploy OffsetNFT
+  console.log("Deploying OffsetNFT using Create2...");
+  const offsetNFTDeployed = await chainweb.create2.deployOnChainsUsingCreate2({
+    name: "OffsetNFT",
+    constructorArgs: [deployer.address],
+    create2Factory: factoryAddress,
+    salt: ethers.id("offsetNFT"),
+  });
+
+  // Deploy CarbonOffsetManager with dependencies
+  console.log("Deploying CarbonOffsetManager using Create2...");
   const deployed = await chainweb.create2.deployOnChainsUsingCreate2({
     name: "CarbonOffsetManager",
-    constructorArgs: [deployer.address],
+    constructorArgs: [
+      carbonCreditDeployed.deployments[0].address, // _carbonCredit
+      offsetNFTDeployed.deployments[0].address,// _offsetNFT
+      deployer.address,// _centralWallet
+      deployer.address,// initialOwner
+    ],
     create2Factory: factoryAddress,
     salt: salt,
   });
@@ -70,7 +93,12 @@ async function main() {
         console.log(`Attempting to verify contract on chain ${chainId}...`);
         await run("verify:verify", {
           address: contractAddress,
-          constructorArguments: [deployer.address], // Match your constructor args
+          constructorArguments: [
+            carbonCreditDeployed.deployments[0].address, // _carbonCredit
+            offsetNFTDeployed.deployments[0].address,    // _offsetNFT
+            deployer.address,                            // _centralWallet
+            deployer.address                             // initialOwner
+          ],
           force: true,
         });
 
