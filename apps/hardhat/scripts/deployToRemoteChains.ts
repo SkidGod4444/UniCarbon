@@ -39,13 +39,15 @@ async function main() {
 
   // Deploy CarbonOffsetManager with dependencies
   console.log("Deploying CarbonOffsetManager using Create2...");
+  const pricePerCredit = ethers.parseUnits("1", 18); // 1 ETH per credit
   const deployed = await chainweb.create2.deployOnChainsUsingCreate2({
     name: "CarbonOffsetManager",
     constructorArgs: [
       carbonCreditDeployed.deployments[0].address, // _carbonCredit
-      offsetNFTDeployed.deployments[0].address,// _offsetNFT
-      deployer.address,// _centralWallet
-      deployer.address,// initialOwner
+      offsetNFTDeployed.deployments[0].address, // _offsetNFT
+      deployer.address, // _centralWallet
+      deployer.address, // initialOwner
+      pricePerCredit, // _pricePerCredit
     ],
     create2Factory: factoryAddress,
     salt: salt,
@@ -63,48 +65,57 @@ async function main() {
     // Generate the deployed contracts file
     // await generateDeployedContractsFile(successfulDeployments);
 
-    // Verify smart contracts on each chain
-    const deploymentsByChain: Record<number, any> = {};
-    for (const deployment of successfulDeployments) {
-      deploymentsByChain[deployment.chain] = deployment;
-    }
+    // Collect all contract deployments for verification
+    const allDeployments = [
+      { name: "CarbonCredit", deployments: carbonCreditDeployed.deployments, constructorArgs: [deployer.address] },
+      { name: "OffsetNFT", deployments: offsetNFTDeployed.deployments, constructorArgs: [deployer.address] },
+      {
+        name: "CarbonOffsetManager",
+        deployments: deployed.deployments,
+        constructorArgs: [
+          carbonCreditDeployed.deployments[0].address, // _carbonCredit
+          offsetNFTDeployed.deployments[0].address, // _offsetNFT
+          deployer.address, // _centralWallet
+          deployer.address, // initialOwner
+          pricePerCredit, // _pricePerCredit
+        ],
+      },
+    ];
 
-    // Process deployments using runOverChains
+    // Verify all smart contracts on each chain
     await chainweb.runOverChains(async (chainId: number) => {
-      // Skip chains that weren't in our successful deployments
-      if (!deploymentsByChain[chainId]) {
-        console.log(`No deployment for chain ${chainId}, skipping verification`);
-        return;
-      }
+      console.log(`\n🔍 Starting verification for chain ${chainId}...`);
 
-      const deployment = deploymentsByChain[chainId];
-      const contractAddress = deployment.address;
+      for (const contract of allDeployments) {
+        const deployment = contract.deployments.find(d => d && d.chain === chainId);
 
-      console.log(`Verifying contract with address ${contractAddress} on chain ${chainId}...`);
-
-      try {
-        console.log(`Waiting ${verificationDelay / 1000} seconds before verification...`);
-
-        // Optional delay for verification API to index the contract
-        if (verificationDelay > 0) {
-          await new Promise(resolve => setTimeout(resolve, verificationDelay));
+        if (!deployment) {
+          console.log(`⚠️  No ${contract.name} deployment found for chain ${chainId}, skipping verification`);
+          continue;
         }
 
-        console.log(`Attempting to verify contract on chain ${chainId}...`);
-        await run("verify:verify", {
-          address: contractAddress,
-          constructorArguments: [
-            carbonCreditDeployed.deployments[0].address, // _carbonCredit
-            offsetNFTDeployed.deployments[0].address,    // _offsetNFT
-            deployer.address,                            // _centralWallet
-            deployer.address                             // initialOwner
-          ],
-          force: true,
-        });
+        const contractAddress = deployment.address;
+        console.log(`\n📋 Verifying ${contract.name} at ${contractAddress} on chain ${chainId}...`);
 
-        console.log(`✅ Contract successfully verified on chain ${chainId}`);
-      } catch (verifyError: any) {
-        console.error(`Error verifying contract on chain ${chainId}:`, verifyError.message);
+        try {
+          console.log(`⏳ Waiting ${verificationDelay / 1000} seconds before verification...`);
+
+          // Optional delay for verification API to index the contract
+          if (verificationDelay > 0) {
+            await new Promise(resolve => setTimeout(resolve, verificationDelay));
+          }
+
+          console.log(`🔍 Attempting to verify ${contract.name} on chain ${chainId}...`);
+          await run("verify:verify", {
+            address: contractAddress,
+            constructorArguments: contract.constructorArgs,
+            force: true,
+          });
+
+          console.log(`✅ ${contract.name} successfully verified on chain ${chainId}`);
+        } catch (verifyError: any) {
+          console.error(`❌ Error verifying ${contract.name} on chain ${chainId}:`, verifyError.message);
+        }
       }
     });
   }
