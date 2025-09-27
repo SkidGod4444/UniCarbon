@@ -2,11 +2,9 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import health from "../routes/alive";
 import { handle } from "hono/vercel";
-import admin from "../routes/admin";
-import company from "../routes/company";
-import tx from "../routes/tx";
-import nfts from "../routes/nfts";
-import projects from "../routes/projects";
+import offset from "../routes/offset";
+import order from "../routes/order";
+import property from "../routes/property";
 
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
@@ -28,12 +26,10 @@ app.use(
 // Import routes
 app.route("/health", health);
 
-// Main API routes
-app.route("/admin", admin);
-app.route("/company", company);
-app.route("/tx", tx);
-app.route("/nfts", nfts);
-app.route("/projects", projects);
+// Contract routes
+app.route("/contracts/offset", offset);
+app.route("/contracts/order", order);
+app.route("/contracts/property", property);
 
 const GET = handle(app);
 const POST = handle(app);
