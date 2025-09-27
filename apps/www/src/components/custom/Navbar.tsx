@@ -6,10 +6,10 @@ import {
     faChevronRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { Button } from "../ui/button";
-import { useAuth } from "@/hooks/AuthContext";
+import { useAuth } from "@/hooks/authcontext";
 import { MoveRight } from "lucide-react";
 import KycForm from "./dashboard/sub-components/kycform";
-import { useKyc } from "@/hooks/KycContext";
+import { useKyc } from "@/hooks/kyccontext";
 
 function Navbar() {
     // State for managing mobile menu visibility

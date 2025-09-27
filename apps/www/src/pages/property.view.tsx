@@ -11,14 +11,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "@/hooks/AuthContext";
+import { useAuth } from "@/hooks/authcontext";
 import { useEffect, useState, useMemo } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRazorpay } from "react-razorpay";
 import axios from "axios";
 import { toast } from "sonner";
 import KycForm from "@/components/custom/dashboard/sub-components/kycform";
-import { useKyc } from "@/hooks/KycContext";
+import { useKyc } from "@/hooks/kyccontext";
 import Project from "@/types/type";
 
 // Simple in-memory cache for fetched properties

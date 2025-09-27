@@ -12,15 +12,15 @@ import Portfolio from "./components/custom/dashboard/pages/Portfolio";
 import CreditPurchasePage from "./pages/offset";
 import Transaction_History from "./components/custom/dashboard/pages/transactions.history";
 import ProjectStatus from "./pages/project.status";
-import ForgotPassword from "./pages/forgot-password";
-import { UpdatePasswordForm } from "./components/auth/update-password";
+import ForgotPassword from "./components/auth/forgot.password";
+import { UpdatePasswordForm } from "./components/auth/update.password";
 import Admin from "./admin";
 import AdminMiddleware from "./components/custom/auth/AdminMiddleware";
 import Users from "./admin/allUsers";
 import { ProjectsTable } from "@/components/ProjectsTable";
 import CreatePropertyForm from "./admin/createProperty/createProperty";
-import { KycProvider } from "./hooks/KycContext";
-import { useAuth } from "./hooks/AuthContext";
+import { KycProvider } from "./hooks/kyccontext";
+import { useAuth } from "./hooks/authcontext";
 
 function App() {
   const location = useLocation();

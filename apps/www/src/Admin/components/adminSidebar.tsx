@@ -139,7 +139,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, X } from "lucide-react";
-import { useAuth } from "@/hooks/AuthContext";
+import { useAuth } from "@/hooks/authcontext";
 import { supabase } from "@/lib/supabase";
 import {
   Dialog,

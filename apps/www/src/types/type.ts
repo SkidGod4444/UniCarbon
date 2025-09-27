@@ -57,7 +57,7 @@ export default interface Project {
   progress: ProjectProgress[] | null;
   growth: string | null;
   Project_Parameters: Record<string, unknown> | null;
-  Highlights: any[] | null;
+  Highlights: unknown[] | null;
   totalShares: number | null;
   Documents: string[] | null;
 }

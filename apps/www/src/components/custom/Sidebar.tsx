@@ -10,7 +10,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { Menu, X } from "lucide-react";
-import { useAuth } from "@/hooks/AuthContext";
+import { useAuth } from "@/hooks/authcontext";
 
 import {
   Dialog,
@@ -20,7 +20,7 @@ import {
   DialogTitle,
 } from "../ui/dialog";
 import KycForm from "./dashboard/sub-components/kycform";
-import { useKyc } from "@/hooks/KycContext";
+import { useKyc } from "@/hooks/kyccontext";
 
 const Sidebar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);
