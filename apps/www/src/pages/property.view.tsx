@@ -17,7 +17,7 @@ import { supabase } from "@/lib/supabase";
 import { useRazorpay } from "react-razorpay";
 import axios from "axios";
 import { toast } from "sonner";
-import KycForm from "@/components/custom/dashboard/sub-components/KycForm";
+import KycForm from "@/components/custom/dashboard/sub-components/kycform";
 import { useKyc } from "@/hooks/KycContext";
 import Project from "@/types/type";
 

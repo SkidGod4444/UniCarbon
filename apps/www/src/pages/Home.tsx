@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import HeroCards from "../components/custom/HeroCards";
+import HeroCards from "../components/custom/hero.cards";
 import {
   faArrowUpRightDots,
   faFolderOpen,
@@ -13,7 +13,7 @@ import Footer from "../components/custom/Footer";
 import { useState } from "react";
 import CustomGlobe from "../components/CustomGlobe";
 import WordRotate from "../components/magic/TextRotate";
-import { HeroScrollDemo } from "../components/custom/ContainerCustomerAnimation";
+import { HeroScrollDemo } from "../components/custom/container.animation";
 import {
   CardContainer,
   CardBody,

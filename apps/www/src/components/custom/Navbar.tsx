@@ -8,7 +8,7 @@ import {
 import { Button } from "../ui/button";
 import { useAuth } from "@/hooks/AuthContext";
 import { MoveRight } from "lucide-react";
-import KycForm from "./dashboard/sub-components/KycForm";
+import KycForm from "./dashboard/sub-components/kycform";
 import { useKyc } from "@/hooks/KycContext";
 
 function Navbar() {

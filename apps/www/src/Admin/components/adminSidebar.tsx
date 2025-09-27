@@ -149,7 +149,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import KycForm from "@/components/custom/dashboard/sub-components/KycForm";
+import KycForm from "@/components/custom/dashboard/sub-components/kycform";
 
 const AdminSideBar = () => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(true);

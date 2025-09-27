@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Mapbox from "../sub-components/Mapbox";
-import YourPropertiesTable from "../sub-components/YourPropertiesTable";
+// import Mapbox from "../sub-components/Mapbox";
+import YourPropertiesTable from "../sub-components/properties.table";
 import { supabase } from "@/lib/supabase";
 import { useAuth } from "@/hooks/AuthContext";
+import { Button } from "@/components/ui/button";
 
 interface Property {
   name: string;
@@ -12,6 +13,7 @@ interface Property {
   price: number;
   status: string;
   available_shares: number;
+  totalShares: number;
   propertyName: string;
   location: string;
   yourShares: number;
@@ -70,6 +72,7 @@ function Portfolio() {
             price: property.price,
             status: property.status,
             available_shares: property.available_shares ?? 0,
+            totalShares: property.totalShares ?? 0,
             propertyName: property.name,
             yourShares: credits,
             latitude: property.latitude ?? 0,
@@ -109,9 +112,9 @@ function Portfolio() {
   return (
     <div className="flex flex-col w-full max-w-full px-4 mx-auto">
       <div className="flex flex-row space-x-6">
-        <div className="w-1/2">
+        <div className="w-full">
           <div className="text-left">
-            <p className="text-lg">Portfolio Stats</p>
+            <p className="text-2xl font-semibold">Portfolio Stats</p>
           </div>
           <hr className="h-[2px] bg-black/5 my-2" />
           <div className="grid grid-cols-2 gap-6 p-4 mb-6 text-center">
@@ -143,24 +146,18 @@ function Portfolio() {
           </div>
 
           <div className="flex justify-center">
-            <button
+            <Button
               className="w-full py-3 mx-4 text-lg text-white bg-black border-2 border-black rounded-xl hover:bg-white hover:text-black"
               onClick={() => navigate("/dashboard")}
             >
               Invest More
-            </button>
+            </Button>
           </div>
         </div>
 
-        {/* Mapbox Component */}
-        <div className="w-1/2 h-[30rem] ">
-          <p className="text-lg">Locate your shares</p>
-          <hr className="h-[2px] bg-black/5 my-2" />
-          <Mapbox properties={projects} />
-        </div>
       </div>
-      <div className="pt-8 text-left">
-        <p className="text-lg">Your Projects</p>
+      <div className="pt-8 text-left md:px-4">
+        <p className="text-2xl font-semibold">Your Projects</p>
       </div>
       <div className="py-0 my-0 divider before:bg-black/5 after:bg-black/5"></div>
       <YourPropertiesTable properties={projects} />

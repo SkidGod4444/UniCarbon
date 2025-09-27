@@ -19,7 +19,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../ui/dialog";
-import KycForm from "./dashboard/sub-components/KycForm";
+import KycForm from "./dashboard/sub-components/kycform";
 import { useKyc } from "@/hooks/KycContext";
 
 const Sidebar = () => {

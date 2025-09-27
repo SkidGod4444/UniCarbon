@@ -8,7 +8,6 @@ import {
   TableRow,
   TableCell,
   Input,
-  Button,
   DropdownTrigger,
   Dropdown,
   DropdownMenu,
@@ -18,13 +17,7 @@ import {
 } from "@nextui-org/react";
 import { SearchIcon } from "../icons/SearchIcon";
 import { ChevronDownIcon } from "../icons/ChevronDownIcon";
-
-// const propertyTypes = [
-//   { uid: "residential", name: "Residential" },
-//   { uid: "commercial", name: "Commercial" },
-//   { uid: "industrial", name: "Industrial" },
-//   { uid: "emptyPlot", name: "Empty Plot" },
-// ];
+import { Button } from "@/components/ui/button";
 
 const columns = [
   { uid: "propertyName", name: "Project Name" },
@@ -129,30 +122,33 @@ export default function YourPropertiesTable({ properties }: YourPropertiesTableP
         return item.yourShares;
       case "actions": 
         return (
-          <button onClick={()=>{navigate(`/property/view/${item.id}`)}} className="px-4 py-2 font-bold text-white bg-black border-2 border-black rounded-full hover:bg-white hover:text-black">
+          <button onClick={()=>{navigate(`/property/view/${item.id}`)}} className="px-2 py-1 md:px-4 md:py-2 min-w-20 font-bold text-white bg-black border-2 border-black rounded-full hover:bg-white hover:text-black">
             View
           </button>
         );
       default:
         return null;
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="w-full max-w-full px-4 mx-auto">
       <div className="flex items-center justify-between gap-4 mt-2 mb-4">
         <Dropdown>
           <DropdownTrigger>
-            <Button endContent={<ChevronDownIcon />} variant="flat" className="h-12 text-md">
+            <Button variant={"outline"} className="text-base">
               Project Type
+              <ChevronDownIcon />
             </Button>
           </DropdownTrigger>
+          {/* @ts-expect-error NextUI DropdownMenu type compatibility issue */}
           <DropdownMenu
             disallowEmptySelection
             selectedKeys={propertyTypeFilter}
             selectionMode="multiple"
             onSelectionChange={setPropertyTypeFilter}
             closeOnSelect={false}
+            className="bg-background min-w-52 border border-border rounded-md"
           >
             <DropdownItem key="all">All Types</DropdownItem>
             <DropdownItem key="residential">Residential</DropdownItem>
@@ -163,28 +159,39 @@ export default function YourPropertiesTable({ properties }: YourPropertiesTableP
         </Dropdown>
 
         <Input
-          className="w-full max-w-lg text-xl"
+          className="w-full max-w-lg text-base bg-gray-100 rounded-xl"
           placeholder="Search for a project by name..."
-          startContent={<SearchIcon className="mr-2" />}
+          startContent={<SearchIcon className="mr-1" />}
           value={filterValue}
           onValueChange={setFilterValue}
           size="lg"
         />
       </div>
 
-      <Table aria-label="User-owned property table " className="mb-4" sortDescriptor={sortDescriptor} onSortChange={setSortDescriptor}>
-        <TableHeader>
-          {columns.map((column) => (
-            <TableColumn key={column.uid} allowsSorting className="text-black text-md">
-              {column.name}
+      <Table
+        isStriped
+        aria-label="User-owned property table"
+        className="w-full md:w-full overflow-x-scroll border rounded-2xl mb-4"
+        sortDescriptor={sortDescriptor}
+        onSortChange={setSortDescriptor}
+      >
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              allowsSorting
+              align={column.uid === "actions" ? "center" : "start"}
+              className="text-base"
+            >
+              <div className="flex gap-2 items-center group">{column.name}</div>
             </TableColumn>
-          ))}
+          )}
         </TableHeader>
         <TableBody>
           {sortedItems.map((item, index) => (
-            <TableRow key={index}>
+            <TableRow key={index} className={`${index % 2 !== 0 ? "bg-gray-100" : ""}`}>
               {columns.map((column) => (
-                <TableCell key={column.uid} className="text-md">
+                <TableCell key={column.uid} className="text-base">
                   {renderCell(item, column.uid)}
                 </TableCell>
               ))}

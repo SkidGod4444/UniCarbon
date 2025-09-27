@@ -17,7 +17,6 @@ import {
 } from "@nextui-org/react";
 import { ChevronDownIcon } from "./custom/dashboard/icons/ChevronDownIcon";
 import { SearchIcon } from "./custom/dashboard/icons/SearchIcon";
-import { ChevronUpIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Project } from "index";
 import { Button } from "./ui/button";
@@ -118,6 +117,7 @@ export const ProjectsTable = () => {
                                 <ChevronDownIcon />
                             </Button>
                         </DropdownTrigger>
+                        {/* @ts-expect-error NextUI DropdownMenu type compatibility issue */}
                         <DropdownMenu
                             selectionMode="multiple"
                             selectedKeys={selectedTypes}
@@ -144,7 +144,8 @@ export const ProjectsTable = () => {
                                 <ChevronDownIcon />
                             </Button>
                         </DropdownTrigger>
-                        <DropdownMenu 
+                        {/* @ts-expect-error NextUI DropdownMenu type compatibility issue */}
+                        <DropdownMenu
                             selectionMode="single"
                             selectedKeys={new Set([selectedPrice])}
                             className="bg-background min-w-52 border border-border rounded-md"
@@ -191,7 +192,7 @@ export const ProjectsTable = () => {
                             align={column.uid === "actions" ? "center" : "start"}
                             className="text-black text-base"
                         >
-                            <div className="flex gap-2 items-center group">{column.name} <span className="opacity-0 ease-in-out transition-opacity duration-300 group-hover:opacity-100"><ChevronUpIcon /></span></div>
+                            <div className="flex gap-2 items-center group">{column.name}</div>
                         </TableColumn>
                     )}
                 </TableHeader>
