@@ -212,7 +212,7 @@ export default function CreditPurchasePage() {
       });
 
       const { data } = await axios.post(
-        "https://api.nextcarbon.in/api/offset", {
+        `${import.meta.env.VITE_BACKEND_URL}/v1/contracts/offset`, {
         userId: currentUserId,
         propertyId: selectedProjectId,
         credits: values.credits,

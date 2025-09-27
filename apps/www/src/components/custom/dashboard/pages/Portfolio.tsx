@@ -79,8 +79,7 @@ function Portfolio() {
             longitude: property.longitude ?? 0,
           }));
         });
-        // console.log("formatedProjects are : ", formattedProjects);
-        // console.log("Fetched credits:", credits);
+        
         setProjects(formattedProjects);
 
         const totalShares = formattedProjects.reduce(
