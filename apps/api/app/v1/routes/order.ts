@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import crypto from "crypto";
 import { orderCreateSchema, orderVerifySchema } from "@/utilities/schema";
 import { supabase } from "@/utilities/supabase";
 import razorpay from "@/utilities/razorpay";
@@ -41,9 +40,8 @@ order.post("/create", async (c) => {
     );
   }
 
-  const orderReceipt = `rcpt_${crypto
-    .randomBytes(3)
-    .toString("hex")}_${Date.now()}`;
+  const randomStr = Math.random().toString(36).substring(2, 8);
+  const orderReceipt = `rcpt_${randomStr}_${Date.now()}`;
 
   try {
     const { data: propertyData } = await supabase
@@ -139,10 +137,20 @@ order.post("/verify", async (c) => {
     );
   }
 
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_SECRET as string)
-    .update(data.orderId + "|" + data.paymentId)
-    .digest("hex");
+  // We can't use Node's 'crypto' in edge environments, so use Web Crypto API
+  const encoder = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw",
+    encoder.encode(process.env.RAZORPAY_SECRET as string),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"]
+  );
+  const dataToSign = encoder.encode(data.orderId + "|" + data.paymentId);
+  const signatureBuffer = await crypto.subtle.sign("HMAC", key, dataToSign);
+  const expectedSignature = Array.from(new Uint8Array(signatureBuffer))
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
 
   if (data.razorpaySignature === expectedSignature) {
     await supabase

@@ -1,11 +1,24 @@
 {
   "$schema": "https://turborepo.com/schema.json",
   "ui": "tui",
+  "concurrency": "100%",
+  "daemon": true,
+  "envMode": "strict",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "outputs": [".next/**", "!.next/cache/**"],
+      "env": [
+        "RAZORPAY_KEY_ID",
+        "RAZORPAY_SECRET",
+        "SUPABASE_URI",
+        "SUPABASE_SERVICE_ROLE_KEY",
+        "KADENA_RPC_URL",
+        "DEPLOYER_PRIVATE_KEY",
+        "DEPLOYED_CONTRACT_ADDRESS",
+        "COMPANY_ADDRESS"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
