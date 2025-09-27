@@ -81,7 +81,7 @@ projects.get("/", async (c): Promise<Response> => {
       hasMore: offset + limit < total
     };
 
-    const projectListResponse: ProjectListResponse = {
+    const projectListResponse: any = {
       projects: projectData,
       pagination
     };

@@ -12,6 +12,7 @@ import type {
   OffsetCreditsResponse,
   PrismaCompany 
 } from "../types/api";
+import { CONFIG } from "@/utilities/config";
 
 const company = new Hono();
 
@@ -249,7 +250,7 @@ company.post("/credits/offset", async (c): Promise<Response> => {
   }
 
   try {
-    const carbonManagerAddress = process.env.CARBON_MANAGER_ADDRESS;
+    const carbonManagerAddress = CONFIG.carbonManagerAddress;
 
     const offsetResponse: OffsetCreditsResponse = {
       transaction: {
