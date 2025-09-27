@@ -14,11 +14,11 @@ import Transaction_History from "./components/custom/dashboard/pages/Transaction
 import ProjectStatus from "./pages/project.status";
 import ForgotPassword from "./pages/forgot-password";
 import { UpdatePasswordForm } from "./pages/update-password";
-import Admin from "./Admin";
+import Admin from "./admin";
 import AdminMiddleware from "./components/custom/auth/AdminMiddleware";
-import Users from "./Admin/allUsers";
+import Users from "./admin/allUsers";
 import { ProjectsTable } from "@/components/ProjectsTable";
-import CreatePropertyForm from "./Admin/createProperty/createProperty";
+import CreatePropertyForm from "./admin/createProperty/createProperty";
 import { KycProvider } from "./hooks/KycContext";
 import { useAuth } from "./hooks/AuthContext";
 

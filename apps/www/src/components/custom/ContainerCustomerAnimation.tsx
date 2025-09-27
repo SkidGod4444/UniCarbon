@@ -1,6 +1,6 @@
 "use client";
 import { ContainerScroll } from "../aceternity/containerScrollAnimation";
-import screenshot from "../../assets/img/screenshot.png";
+import screenshot from "../../../public/img/screenshot.png";
 
 export function HeroScrollDemo() {
   return (

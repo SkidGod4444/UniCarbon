@@ -1,7 +1,7 @@
 import {
     Table, TableHeader, TableColumn, TableBody, TableRow, TableCell
 } from "@nextui-org/react";
-import usdcCoin from "../assets/svg/usd-coin.svg";
+import usdcCoin from "../../public/svg/usd-coin.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowTrendDown, faArrowTrendUp } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useMemo, useState } from "react";
@@ -11,7 +11,6 @@ import {
     DropdownTrigger,
     DropdownMenu,
     DropdownItem,
-    Button,
     Input,
     Selection,
     SortDescriptor
@@ -21,6 +20,7 @@ import { SearchIcon } from "./custom/dashboard/icons/SearchIcon";
 import { ChevronUpIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Project } from "index";
+import { Button } from "./ui/button";
 
 const columns = [
     { uid: "cover", name: "" },
@@ -113,8 +113,9 @@ export const ProjectsTable = () => {
                     {/* Property Type Filter */}
                     <Dropdown>
                         <DropdownTrigger>
-                            <Button endContent={<ChevronDownIcon />} variant="flat" className="h-12 text-base">
+                            <Button variant={"outline"} className="text-base">
                                 Project Type
+                                <ChevronDownIcon />
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu
@@ -122,6 +123,7 @@ export const ProjectsTable = () => {
                             selectedKeys={selectedTypes}
                             onSelectionChange={setSelectedTypes}
                             closeOnSelect={false}
+                            className="bg-background min-w-52 border border-border rounded-md"
                         >
                             <DropdownItem key="all">All Types</DropdownItem>
                             <>
@@ -134,17 +136,18 @@ export const ProjectsTable = () => {
                     {/* Price Filter */}
                     <Dropdown>
                         <DropdownTrigger>
-                            <Button 
-                                endContent={<ChevronDownIcon />} 
-                                variant="flat" 
-                                className="h-12 text-base"
+                            <Button  
+                                variant="outline" 
+                                className="text-base"
                             >
                                 {selectedPrice}
+                                <ChevronDownIcon />
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu 
                             selectionMode="single"
                             selectedKeys={new Set([selectedPrice])}
+                            className="bg-background min-w-52 border border-border rounded-md"
                             onSelectionChange={(keys) => {
                                 const selected = Array.from(keys)[0] as string;
                                 setSelectedPrice(selected);
