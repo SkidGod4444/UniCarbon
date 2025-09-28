@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import YourTransactionTable from "../sub-components/transaction.table";
-import { useAuth } from "@/hooks/authcontext";
+import { useAuth } from "@/hooks/AuthContext";
 import { supabase } from "@/lib/supabase";
 
 type Transaction = {

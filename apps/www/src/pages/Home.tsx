@@ -9,7 +9,7 @@ import {
   faCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import PriceBar from "../components/animata/PriceBar";
-import Footer from "../components/custom/footer";
+import Footer from "../components/custom/Footer";
 import { useState } from "react";
 import CustomGlobe from "../components/CustomGlobe";
 import WordRotate from "../components/magic/TextRotate";

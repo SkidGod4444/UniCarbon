@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 // import Mapbox from "../sub-components/Mapbox";
 import YourPropertiesTable from "../sub-components/properties.table";
 import { supabase } from "@/lib/supabase";
-import { useAuth } from "@/hooks/authcontext";
+import { useAuth } from "@/hooks/AuthContext";
 import { Button } from "@/components/ui/button";
 
 interface Property {

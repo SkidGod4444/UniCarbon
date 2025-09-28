@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { CheckCircle2, Circle, Clock, MessageSquare, ArrowLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { useAuth } from "@/hooks/authcontext"
+import { useAuth } from "@/hooks/AuthContext"
 import { supabase } from "@/lib/supabase"
 
 interface ProgressStage {

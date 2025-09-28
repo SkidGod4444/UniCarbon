@@ -1,8 +1,8 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import Home from "./pages/home";
+import Home from "./pages/Home";
 import Navbar from "./components/custom/Navbar";
 import { Toaster } from "@/components/ui/sonner";
-import { Dashboard } from "./pages/dashboard";
+import { Dashboard } from "./pages/Dashboard";
 import Login from "./components/auth/login";
 import Signup from "./components/auth/signup";
 import AllProducts from "./components/custom/dashboard/pages/all.products";
@@ -14,13 +14,13 @@ import Transaction_History from "./components/custom/dashboard/pages/transaction
 import ProjectStatus from "./pages/project.status";
 import ForgotPassword from "./components/auth/forgot.password";
 import { UpdatePasswordForm } from "./components/auth/update.password";
-import Admin from "./admin";
+import Admin from "./Admin";
 import AdminMiddleware from "./components/custom/auth/AdminMiddleware";
-import Users from "./admin/allUsers";
-import { ProjectsTable } from "@/components/ProjectsTable";
-import CreatePropertyForm from "./admin/createProperty/createProperty";
-import { KycProvider } from "./hooks/kyccontext";
-import { useAuth } from "./hooks/authcontext";
+import Users from "./Admin/allUsers";
+import CreatePropertyForm from "./Admin/createProperty/createProperty";
+import { KycProvider } from "./hooks/KycContext";
+import { useAuth } from "./hooks/AuthContext";
+import { ProjectsTable } from "./components/ProjectsTable";
 
 function App() {
   const location = useLocation();
