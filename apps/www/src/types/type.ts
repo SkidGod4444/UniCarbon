@@ -33,6 +33,11 @@ export interface ProjectProgress {
   isDone: boolean;
 }
 
+// Highlight structure
+export interface Highlight {
+  highlight: string;
+}
+
 // User KYC structure
 export interface UserKyc {
   id: string;
@@ -57,7 +62,7 @@ export default interface Project {
   progress: ProjectProgress[] | null;
   growth: string | null;
   Project_Parameters: Record<string, unknown> | null;
-  Highlights: unknown[] | null;
+  Highlights: Highlight[] | null;
   totalShares: number | null;
   Documents: string[] | null;
 }

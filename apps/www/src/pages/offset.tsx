@@ -481,6 +481,7 @@ export default function CreditPurchasePage() {
                         ).toString(),
                         tonnes: (purchase.credits / 1).toString(),
                         beneficiaryAddress: purchase.beneficiary_address,
+                        beneficiary: purchase.beneficiary_name,
                         project: purchase.beneficiary_name,
                         transactionHash: purchase.transaction_hash,
                         description: purchase.description,
