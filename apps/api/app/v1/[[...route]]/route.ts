@@ -9,7 +9,7 @@ import property from "../routes/property";
 export const runtime = "edge";
 const app = new Hono().basePath("/v1");
 
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["http://localhost:3000", "https://uni-carbon-www.vercel.app"];
 
 app.use(
   "*",
