@@ -1,135 +1,240 @@
-# Turborepo starter
+# 🌱 [UniCarbon](https://uni-carbon-www.vercel.app/)
 
-This Turborepo starter is maintained by the Turborepo core team.
+> **The New Age Re-Fi Protocol for Sustainability Projects**
 
-## Using this example
+A decentralized platform that tokenizes carbon credits, enabling users or businesses to invest in verified environmental projects and offset their carbon footprint through blockchain technology.
 
-Run the following command:
+# Tech Stack of Unicarbon
 
-```sh
-npx create-turbo@latest
+### **Frontend**
+- **React 18** + **TypeScript** - Modern UI framework
+- **Vite** - Fast build tool and dev server
+- **Tailwind CSS** - Utility-first styling
+- **Framer Motion** - Smooth animations
+- **React Router** - Client-side routing
+- **Zustand** - State management
+
+### **Backend**
+- **Next.js 15** - Full-stack React framework
+- **Hono** - Lightweight web framework
+- **Supabase** - Database and authentication
+- **Razorpay** - Payment processing
+
+### **Blockchain Infrastructure**
+- **Kadena Chainweb** - Multi-chain EVM-compatible blockchain
+- **Hardhat** - Ethereum development environment
+- **Solidity** - Smart contract language
+- **OpenZeppelin** - Secure contract libraries
+- **Ethers.js** - Blockchain interaction
+- **Chainweb EVM** - Smart contract deployment platform
+
+### **Infrastructure**
+- **Turborepo** - Monorepo management
+- **Bun** - Fast package manager
+- **Vercel** - Deployment platform
+
+
+### **Kadena's Role in Carbon Credits**
+- **Sustainable Infrastructure** - More energy-efficient than traditional blockchains
+- **Cost-Effective Transactions** - Enables micro-transactions for carbon credits
+- **Regulatory Compliance** - Better suited for environmental regulations
+
+---
+
+## Project Idea 🎀
+
+UniCarbon is a DeFi platform that connects **carbon offsetter** with **companies** seeking to offset their carbon emissions. Here's how it works:
+
+### **For carbon offsetter** 🏞️
+- Who own 100+ acres of land or and carbon offsetter property or asset can list your carbon reduction project
+- Generate verified carbon credits (e.g., 100 units from 100 acres)
+- Get paid for your environmental impact
+
+### **For Companies** 🏢
+- Purchase carbon credits to offset your company's emissions
+- Meet ESG goals and regulatory requirements
+- Receive NFT certificates as proof of carbon offset
+- Transparent, blockchain-verified impact tracking
+
+### **For Admins** 👨‍💼
+- Verify and approve land owner projects
+- Manage the carbon credit marketplace
+- Ensure compliance with environmental standards
+- Oversee the entire carbon credit lifecycle
+
+**Key Benefits:**
+- **Tokenized Carbon Credits** - ERC20 tokens representing verified carbon reductions
+- **NFT Certificates** - Immutable proof of carbon offset
+- **Transparent Pricing** - Real-time market pricing for carbon credits
+- **Verified Projects** - Only government-approved environmental projects
+- **Direct Impact** - Connect land owners directly with companies
+
+---
+
+## 🔄 Complete Application Flow
+
+### **Phase 1: Property Listing & Verification** 📋
+```
+Land Owner → Admin Verification → Property Listing
+     ↓              ↓                    ↓
+Submit Land    Verify Ownership    Create Property
+Documentation  Check Feasibility   Generate Credits
 ```
 
-## What's inside?
-
-This Turborepo includes the following packages/apps:
-
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
-
+### **Phase 2: Investment & Credit Purchase** 💰
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+Investor → Browse Properties → Purchase Credits → Receive Tokens
+    ↓            ↓                    ↓              ↓
+Register    View Available      Pay via Razorpay   CC Tokens
+Account     Carbon Projects     Fiat Payment       in Wallet
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
+### **Phase 3: Carbon Offset & Certification** 🏆
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
+Company → Burn Credits → Generate NFT → Certificate
+    ↓         ↓             ↓            ↓
+Offset      Destroy CC    Mint NFT    Proof of
+Emissions   Tokens        Certificate Offset
 ```
 
-### Develop
+---
 
-To develop all apps and packages, run the following command:
+# 🏗️ Technical Architecture
 
-```
-cd my-turborepo
+## **Smart Contract Details**
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
+#### **CarbonCredit.sol** - ERC20 Token
+```solidity
+// Key Functions:
+- mint(address to, uint256 amount)     // Admin mints new credits
+- burn(uint256 amount)                // User burns credits
+- burnFrom(address account, uint256)  // Burn from another account
 ```
 
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+#### **OffsetNFT.sol** - (ERC-721) Certificate Generation
+```solidity
+// Key Functions:
+- mintCertificate(address to, string uri)  // Mint offset certificate
+- _setTokenURI(uint256 tokenId, string)    // Set certificate metadata
 ```
 
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+#### **CarbonOffsetManager.sol** - Main Logic
+```solidity
+// Key Functions:
+- buyCredits(uint256 amount)         // Purchase credits with KDA
+- offset(uint256 amount, string)      // Offset credits, get NFT
+- projectComplete(uint256 amount)     // Admin funds central wallet
+- generateMetadata()                 // Create NFT metadata
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+---
 
+
+## **Detailed Credit Flow**
+
+```mermaid
+sequenceDiagram
+    participant CO as Carbon Offsetter
+    participant AD as Admin
+    participant SC as Smart Contract
+    participant INV as Investor
+    participant COM as Company
+    participant NFT as OffsetNFT
+
+    CO->>AD: Submit Property (100 acres)
+    AD->>AD: Verify & Approve
+    AD->>SC: Create Property Listing
+    SC->>SC: Generate 100 CC Tokens
+    
+    INV->>SC: Purchase Credits (50 CC)
+    SC->>INV: Transfer CC Tokens
+    
+    COM->>SC: Offset Credits (30 CC)
+    SC->>SC: Burn 30 CC Tokens
+    SC->>NFT: Mint Certificate
+    NFT->>COM: Issue Offset Certificate
+    
+    Note over SC,NFT: Certificate contains:<br/>- Company Address<br/>- Credits Offset<br/>- Project Name<br/>- Timestamp
 ```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+# **Deployment Configuration**
+- **Network**: Kadena Chainweb Testnet
+- **Chain ID**: 20 (EVM Testnet)
+- **Gas Token**: KDA (Kadena)
+- **Block Explorer**: [Chainweb EVM Explorer](https://chain-20.evm-testnet-blockscout.chainweb.com)
+- **RPC Endpoint**: `https://api.testnet.chainweb.com/evm/chain/20`
 
-## Useful Links
+---
 
-Learn more about the power of Turborepo:
+# 🚀 Getting Started
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+### **Prerequisites**
+- Node.js 18+
+- Bun package manager
+
+### **Environment Setup**
+
+1. **Clone and Install**:
+   ```bash
+   git clone https://github.com/your-username/UniCarbon.git
+   cd UniCarbon
+   bun install
+   ```
+
+2. **Configure Environment Variables**:
+   ```bash
+   # Frontend (.env)
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_key
+   VITE_RAZORPAY_KEY=your_razorpay_key
+   VITE_BACKEND_URL=http://localhost:3001
+   
+   # Backend (.env.local)
+   SUPABASE_URL=your_supabase_url
+   SUPABASE_SERVICE_KEY=your_service_key
+   RAZORPAY_KEY_ID=your_razorpay_key
+   RAZORPAY_KEY_SECRET=your_razorpay_secret
+   
+   # Hardhat (.env)
+   KADENA_PRIVATE_KEY=your_private_key
+   KADENA_RPC_URL=https://api.testnet.chainweb.com/evm/chain/20
+   ```
+
+3. **Deploy Smart Contracts**:
+   ```bash
+   cd apps/hardhat
+   bun run deploy:testnet
+   ```
+
+4. **Start Development Servers**:
+   ```bash
+   # Terminal 1 - Frontend
+   cd apps/www
+   bun dev
+   
+   # Terminal 2 - Backend
+   cd apps/api
+   bun dev
+   
+   # Terminal 3 - Hardhat (if needed)
+   cd apps/hardhat
+   bun run chain
+   ```
+
+---
+
+
+## 👥 Contributors
+
+We're grateful to all the contributors who help make UniCarbon a reality!
+
+### **Contributors**
+- **Saidev Dhal** - 19-year-old OSS builder. I love building cool apps. 
+- **Rahul Shah** - FullStack Dev.
+
+
+---
+
+### **Want to Contribute?**
+We welcome contributions from developers, designers, and environmental enthusiasts!
