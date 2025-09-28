@@ -74,6 +74,7 @@ property.post("/create", async (c) => {
         status: data?.status,
         price: data?.price,
         available_shares: data?.availableShares,
+        totalShares: data?.availableShares,
         location: data?.location,
         type: data?.type,
         image: data?.image,

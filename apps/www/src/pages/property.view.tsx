@@ -179,7 +179,7 @@ const PropertyView: React.FC = () => {
     }
 
     const { data: orderData } = await axios.post(
-      `${import.meta.env.VITE_BACKEND_URL}/api/orders/create`,
+      `${import.meta.env.VITE_BACKEND_URL}/v1/contracts/order/create`,
       {
         userId: user.id,
         propertyId,
@@ -202,11 +202,12 @@ const PropertyView: React.FC = () => {
       handler: async (res) => {
         try {
           toast.loading("Verifying payment...", {
+            description: "Please wait while we verify your payment",
             id: "razorpay",
           });
           console.log(res);
           const { data } = await axios.post(
-            `${import.meta.env.VITE_BACKEND_URL}/api/orders/verify`,
+            `${import.meta.env.VITE_BACKEND_URL}/v1/contracts/order/verify`,
             {
               orderId: res.razorpay_order_id,
               userId: user.id,
@@ -219,13 +220,14 @@ const PropertyView: React.FC = () => {
           console.log(data);
 
           if (!data || data.success === false) {
-            toast.error("Payment verification failed", {
+            toast.error("Payment verification failed, please try again", {
               id: "razorpay",
             });
             return;
           }
 
-          toast.success("Payment successful", {
+          toast.success("Your tokens are ready to be claimed", {
+            description: `Transaction hash: https://chain-20.evm-testnet-blockscout.chainweb.com/tx/${data.transaction_hash}`,
             id: "razorpay",
           });
         } catch (error) {

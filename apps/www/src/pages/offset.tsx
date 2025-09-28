@@ -207,12 +207,13 @@ export default function CreditPurchasePage() {
 
     setLoading(true);
     try {
-      toast.loading("Retiring credits...", {
+      toast.loading("Retiring credits in progress...", {
+        description: "Please wait while we retire your credits can take a while to complete",
         id: "retire-credits",
       });
 
       const { data } = await axios.post(
-        "https://api.nextcarbon.in/api/offset", {
+        `${import.meta.env.VITE_BACKEND_URL}/v1/contracts/offset`, {
         userId: currentUserId,
         propertyId: selectedProjectId,
         credits: values.credits,
@@ -269,6 +270,7 @@ export default function CreditPurchasePage() {
         generateRetirementCertificate({
           retiredOn: format(new Date(), "dd MMM yyyy"),
           tonnes: String(data.data?.credits),
+          beneficiary: data.data?.beneficiary_name,
           beneficiaryAddress: data.data?.beneficiary_address,
           project: selectedProject.name || "",
           transactionHash: data.data?.transaction_hash,
@@ -479,6 +481,7 @@ export default function CreditPurchasePage() {
                         ).toString(),
                         tonnes: (purchase.credits / 1).toString(),
                         beneficiaryAddress: purchase.beneficiary_address,
+                        beneficiary: purchase.beneficiary_name,
                         project: purchase.beneficiary_name,
                         transactionHash: purchase.transaction_hash,
                         description: purchase.description,
