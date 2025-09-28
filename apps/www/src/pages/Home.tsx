@@ -36,7 +36,7 @@ function Home() {
           {/* Text container */}
           <div className="flex flex-col items-center justify-center lg:items-start mt-5">
             <div className="mb-3 text-3xl lg:text-3xl">
-              The New Age De-Fi Protocol for sustainability projects
+              The Next Gen Re-Fi Protocol for sustainability projects
             </div>
             <div className="flex flex-col font-bold text-5xl gap-y-3 lg:text-[5rem]">
               <TextGenerateEffect words="Own Carbon Credit Tokens" />
@@ -84,9 +84,9 @@ function Home() {
             Carbon Credits: A Sustainable Choice
           </p>
           <p className="max-w-lg text-lg">
-            Invest in verified carbon credit projects to drive real
-            environmental impact and offset your carbon footprint, contributing
-            to a cleaner, greener future.
+            Buy carbon credits from real projects that help the environment. 
+            Reduce your company's pollution and get certificates to prove your 
+            green efforts. Make a real difference for our planet.
           </p>
         </div>
         {/* Right container */}

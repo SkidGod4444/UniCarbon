@@ -11,22 +11,22 @@ function HeroCards() {
       sharesAvailable: "347,250",
       properties: "435",
       startingFrom: "$15",
-      city: "New York, United States",
-      location: "Uniated States",
+      city: "Amazon Rainforest, Brazil",
+      location: "Brazil",
     },
     {
       sharesAvailable: "236,864",
       properties: "289",
       startingFrom: "$5",
-      city: "Mumbai, India",
-      location: "India",
+      city: "Congo Basin, Africa",
+      location: "Central Africa",
     },
     {
       sharesAvailable: "410,488",
       properties: "239",
       startingFrom: "$10",
-      city: "London, United Kingdom",
-      location: "United Kingdom",
+      city: "Siberian Forests, Russia",
+      location: "Russia",
     },
   ];
 
